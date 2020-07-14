@@ -19,4 +19,3 @@ Docker images
 Docker images are available on [Quay.io](https://quay.io/repository/cybozu/neco-template)
 
 [releases]: https://github.com/cybozu-go/neco-template/releases
-[godoc]: https://godoc.org/github.com/cybozu-go/neco-template
