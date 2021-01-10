@@ -16,9 +16,3 @@
 
 # ignore go.sum
 /go.sum
-
-# ignore tools
-/bin/protoc
-/bin/protoc-gen-go
-/bin/protoc-gen-doc
-/include

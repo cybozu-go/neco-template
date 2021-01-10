@@ -2,25 +2,31 @@
 
 # For Go
 GO111MODULE = on
-GOFLAGS     = -mod=vendor
-export GO111MODULE GOFLAGS
+export GO111MODULE
 
+.PHONY: all
 all: test
 
-test:
-	test -z "$$(gofmt -s -l . | grep -v '^vendor' | tee /dev/stderr)"
-	test -z "$$(golint $$(go list ./... | grep -v /vendor/) | tee /dev/stderr)"
+.PHONY: test
+test: test-tools
+	test -z "$$(gofmt -s -l . | tee /dev/stderr)"
+	staticcheck ./...
 	test -z "$$(nilerr ./... 2>&1 | tee /dev/stderr)"
-	test -z "$(custom-checker -restrictpkg.packages=html/template,log $(go list -tags='' ./... | grep -v /vendor/ ) 2>&1 | tee /dev/stderr)"
-	go build ./...
+	go install ./...
 	go test -race -v ./...
 	go vet ./...
-	ineffassign .
 
-mod:
-	go mod tidy
-	go mod vendor
-	git add -f vendor
-	git add go.mod
+.PHONY: test-tools
+test-tools: staticcheck nilerr
 
-.PHONY:	all test mod
+.PHONY: staticcheck
+staticcheck:
+	if ! which staticcheck >/dev/null; then \
+		cd /tmp; env GOFLAGS= GO111MODULE=on go get honnef.co/go/tools/cmd/staticcheck; \
+	fi
+
+.PHONY: nilerr
+nilerr:
+	if ! which nilerr >/dev/null; then \
+		cd /tmp; env GOFLAGS= GO111MODULE=on go get github.com/gostaticanalysis/nilerr/cmd/nilerr; \
+	fi
