@@ -8,7 +8,7 @@ NILERR = $(BIN_DIR)/nilerr
 all: test
 
 .PHONY: test
-test: setup
+test: test-tools
 	test -z "$$(gofmt -s -l . | tee /dev/stderr)"
 	$(STATICCHECK) ./...
 	test -z "$$($(NILERR) ./... 2>&1 | tee /dev/stderr)"
@@ -16,8 +16,13 @@ test: setup
 	go test -race -v ./...
 	go vet ./...
 
-.PHONY: setup
-setup:
+.PHONY: test-tools
+test-tools: $(STATICCHECK) $(NILERR)
+
+$(STATICCHECK):
 	mkdir -p $(BIN_DIR)
 	GOBIN=$(BIN_DIR) go install honnef.co/go/tools/cmd/staticcheck@latest
+
+$(NILERR):
+	mkdir -p $(BIN_DIR)
 	GOBIN=$(BIN_DIR) go install github.com/gostaticanalysis/nilerr/cmd/nilerr@latest
