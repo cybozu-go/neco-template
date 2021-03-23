@@ -13,6 +13,4 @@
 .#*
 \#*#
 /.vscode
-
-# ignore go.sum
-/go.sum
+/.idea
