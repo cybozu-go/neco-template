@@ -8,14 +8,8 @@ Template repository for Neco
 
 **Project Status**: Initial development
 
-Documentation
--------------
+## Documentation
 
 [docs](docs/) directory contains documents about designs and specifications.
-
-Docker images
--------------
-
-Docker images are available on [Quay.io](https://quay.io/repository/cybozu/neco-template)
 
 [releases]: https://github.com/cybozu-go/neco-template/releases
