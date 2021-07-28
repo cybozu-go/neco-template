@@ -14,3 +14,7 @@
 \#*#
 /.vscode
 /.idea
+
+# Generated files
+/bin
+/docs/book
