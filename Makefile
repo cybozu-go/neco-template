@@ -1,7 +1,7 @@
 BIN_DIR := $(shell pwd)/bin
 
 # Tool versions
-MDBOOK_VERSION = 0.4.19
+MDBOOK_VERSION = 0.4.21
 MDBOOK := $(BIN_DIR)/mdbook
 
 # Test tools
