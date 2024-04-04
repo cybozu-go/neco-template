@@ -91,7 +91,9 @@
             <div class="sidebar-scrollbox">
                 <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Template</a></li><li class="chapter-item expanded affix "><li class="part-title">User manual</li><li class="chapter-item expanded affix "><li class="part-title">Developer documents</li><li class="chapter-item expanded "><a href="release.html"><strong aria-hidden="true">1.</strong> Release procedure</a></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
 
         <!-- Track and set sidebar scroll position -->
@@ -201,14 +203,14 @@ It should look like:</p>
 <ol>
 <li>
 <p>Determine a new version number. Then set <code>VERSION</code> variable.</p>
-<pre><code class="language-console"># Set VERSION and confirm it. It should not have &quot;v&quot; prefix.
+<pre><code class="language-console"># Set VERSION and confirm it. It should not have "v" prefix.
 $ VERSION=x.y.z
 $ echo $VERSION
 </code></pre>
 </li>
 <li>
 <p>Make a branch to release</p>
-<pre><code class="language-console">$ git neco dev &quot;bump-$VERSION&quot;
+<pre><code class="language-console">$ git neco dev "bump-$VERSION"
 </code></pre>
 </li>
 <li>
@@ -216,7 +218,7 @@ $ echo $VERSION
 </li>
 <li>
 <p>Commit the change and push it.</p>
-<pre><code class="language-console">$ git commit -a -m &quot;Bump version to $VERSION&quot;
+<pre><code class="language-console">$ git commit -a -m "Bump version to $VERSION"
 $ git neco review
 </code></pre>
 </li>
@@ -231,12 +233,12 @@ $ echo $VERSION
 
 $ git checkout main
 $ git pull
-$ git tag -a -m &quot;Release v$VERSION&quot; &quot;v$VERSION&quot;
+$ git tag -a -m "Release v$VERSION" "v$VERSION"
 
 # Make sure the release tag exists.
 $ git tag -ln | grep $VERSION
 
-$ git push origin &quot;v$VERSION&quot;
+$ git push origin "v$VERSION"
 </code></pre>
 </li>
 </ol>
