@@ -210,7 +210,9 @@ $ echo $VERSION
 </li>
 <li>
 <p>Make a branch to release</p>
-<pre><code class="language-console">$ git neco dev "bump-$VERSION"
+<pre><code class="language-console">$ git checkout main
+$ git pull
+$ git checkout -b "bump-$VERSION"
 </code></pre>
 </li>
 <li>
@@ -219,7 +221,8 @@ $ echo $VERSION
 <li>
 <p>Commit the change and push it.</p>
 <pre><code class="language-console">$ git commit -a -m "Bump version to $VERSION"
-$ git neco review
+$ git push -u origin HEAD
+$ gh pr create -f
 </code></pre>
 </li>
 <li>
