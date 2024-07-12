@@ -41,7 +41,9 @@ It should look like:
 2. Make a branch to release
 
     ```console
-    $ git neco dev "bump-$VERSION"
+    $ git checkout main
+    $ git pull
+    $ git checkout -b "bump-$VERSION"
     ```
 
 3. Edit `CHANGELOG.md` for the new version ([example][]).
@@ -49,7 +51,8 @@ It should look like:
 
     ```console
     $ git commit -a -m "Bump version to $VERSION"
-    $ git neco review
+    $ git push -u origin HEAD
+    $ gh pr create -f
     ```
 
 5. Merge this branch.
