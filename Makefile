@@ -1,7 +1,7 @@
 BIN_DIR := $(shell pwd)/bin
 
 # Tool versions
-MDBOOK_VERSION = 0.4.40
+MDBOOK_VERSION = 0.4.43
 MDBOOK := $(BIN_DIR)/mdbook
 
 # Test tools
@@ -34,8 +34,8 @@ test-go: test-tools
 ##@ Tools
 
 $(MDBOOK):
-	mkdir -p bin
-	curl -fsL https://github.com/rust-lang/mdBook/releases/download/v$(MDBOOK_VERSION)/mdbook-v$(MDBOOK_VERSION)-x86_64-unknown-linux-gnu.tar.gz | tar -C bin -xzf -
+	mkdir -p $(BIN_DIR)
+	curl -fsL https://github.com/rust-lang/mdBook/releases/download/v$(MDBOOK_VERSION)/mdbook-v$(MDBOOK_VERSION)-x86_64-unknown-linux-gnu.tar.gz | tar -C $(BIN_DIR) -xzf -
 
 .PHONY: test-tools
 test-tools: $(STATICCHECK)
