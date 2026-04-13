@@ -5,6 +5,7 @@ MDBOOK_VERSION = 0.5.2
 MDBOOK := $(BIN_DIR)/mdbook
 
 # Test tools
+STATICCHECK_VERSION = 0.7.0
 STATICCHECK = $(BIN_DIR)/staticcheck
 
 .PHONY: all
@@ -42,4 +43,4 @@ test-tools: $(STATICCHECK)
 
 $(STATICCHECK):
 	mkdir -p $(BIN_DIR)
-	GOBIN=$(BIN_DIR) go install honnef.co/go/tools/cmd/staticcheck@latest
+	GOBIN=$(BIN_DIR) go install honnef.co/go/tools/cmd/staticcheck@v$(STATICCHECK_VERSION)
