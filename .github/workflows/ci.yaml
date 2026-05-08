@@ -6,7 +6,8 @@ on:
     - 'main'
 env:
   go-version: "1.26"
-permissions: {}
+permissions:
+  contents: read
 jobs:
   test:
     name: Small tests
