@@ -1,46 +1,33 @@
 BIN_DIR := $(shell pwd)/bin
 
 # Tool versions
-MDBOOK_VERSION = 0.5.2
+# https://github.com/rust-lang/mdBook/releases
+MDBOOK_VERSION = 0.5.3
+MDBOOK_SHA256 = e2fd508a4fac06cbaa9f88b97d27bdc3b55a08946304ca845879fe26a3699e11
 MDBOOK := $(BIN_DIR)/mdbook
 
-# Test tools
-STATICCHECK_VERSION = 0.7.0
-STATICCHECK = $(BIN_DIR)/staticcheck
-
 .PHONY: all
-all: test
+all: lint test
 
 .PHONY: book
 book: $(MDBOOK)
 	rm -rf docs/book
 	cd docs; $(MDBOOK) build
 
+.PHONY: lint
+lint:
+	test -z "$$(go tool goimports -l -local $$(go list -m) . | tee /dev/stderr)"
+	go tool staticcheck ./...
+	go vet ./...
 
 .PHONY: test
 test:
-	if find . -name go.mod | grep -q go.mod; then \
-		$(MAKE) test-go; \
-	fi
-
-.PHONY: test-go
-test-go: test-tools
-	test -z "$$(gofmt -s -l . | tee /dev/stderr)"
-	$(STATICCHECK) ./...
-	go install ./...
-	go test -race -v ./...
-	go vet ./...
-
-
-##@ Tools
+	go test -race -count=1 -v ./...
 
 $(MDBOOK):
 	mkdir -p $(BIN_DIR)
-	curl -fsL https://github.com/rust-lang/mdBook/releases/download/v$(MDBOOK_VERSION)/mdbook-v$(MDBOOK_VERSION)-x86_64-unknown-linux-gnu.tar.gz | tar -C $(BIN_DIR) -xzf -
-
-.PHONY: test-tools
-test-tools: $(STATICCHECK)
-
-$(STATICCHECK):
-	mkdir -p $(BIN_DIR)
-	GOBIN=$(BIN_DIR) go install honnef.co/go/tools/cmd/staticcheck@v$(STATICCHECK_VERSION)
+	tmp=$$(mktemp -d); \
+	trap 'rm -rf "$$tmp"' EXIT; \
+	curl -fsL -o "$$tmp/mdbook.tar.gz" https://github.com/rust-lang/mdBook/releases/download/v$(MDBOOK_VERSION)/mdbook-v$(MDBOOK_VERSION)-x86_64-unknown-linux-gnu.tar.gz && \
+	echo "$(MDBOOK_SHA256)  $$tmp/mdbook.tar.gz" | sha256sum -c - && \
+	tar -C $(BIN_DIR) -xzf "$$tmp/mdbook.tar.gz"
