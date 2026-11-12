@@ -2,8 +2,8 @@ BIN_DIR := $(shell pwd)/bin
 
 # Tool versions
 # https://github.com/rust-lang/mdBook/releases
-MDBOOK_VERSION = 0.5.3
-MDBOOK_SHA256 = e2fd508a4fac06cbaa9f88b97d27bdc3b55a08946304ca845879fe26a3699e11
+MDBOOK_VERSION = 0.5.4
+MDBOOK_SHA256 = 3f28de05dafca9d0f2eab99c662116b0e37b89b1d96a08f8f430b9eeae958cd7
 MDBOOK := $(BIN_DIR)/mdbook
 
 .PHONY: all
